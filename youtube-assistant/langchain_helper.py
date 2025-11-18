@@ -5,14 +5,18 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
 import os
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings
 
 load_dotenv()
 
 # Embeddings
-embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
-    google_api_key=os.getenv("GOOGLE_API_KEY")
+# embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = HuggingFaceHubEmbeddings(
+    repo_id="sentence-transformers/all-MiniLM-L6-v2",
+    huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_TOKEN")
 )
+
 
 # LLM
 llm = ChatGoogleGenerativeAI(
